@@ -53,7 +53,6 @@ data class StaticArgument(
         }
 
         override fun deserialize(decoder: Decoder): StaticArgument {
-            println(decoder.decode(JsonElementSerializer))
             return StaticArgument(listOf(decoder.decodeString()))
         }
     }
