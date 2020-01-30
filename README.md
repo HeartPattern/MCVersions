@@ -19,6 +19,8 @@ runBlocking{ // Coroutine
     println(latestVersion.id)
     println(latestVersion.releaseTime)
 }
+
+client.close() // Close client
 ```
 
 ## Java
@@ -38,5 +40,7 @@ Version latestVersion = latestVersionFuture.get();
 
 System.out.println(latestVersion.getId());
 System.out.println(latestVersion.getReleaseTime());
+
+client.close(); // Close client
 ```
 
