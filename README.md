@@ -1,7 +1,54 @@
 # MCVersions
 Minecraft version information request and parsing library.
 
+# Add to dependency
+## Gradle(Kotlin DSL)
+```kotlin
+repositories {
+    maven("https://maven.heartpattern.kr/repository/maven-public/")
+}
+
+dependencies {
+    implementation("kr.heartpattern:MCVersions:1.0.0-SNAPSHOT")
+}
+```
+
+## Gradle(Groovy DSL)
+```groovy
+repositories {
+    maven {
+        url 'https://maven.heartpattern.kr/repository/maven-public/'
+    }
+}
+
+dependencies {
+    implementation 'kr.heartpattern:MCVersions:1.0.0-SNAPSHOT'
+}
+```
+
+## Maven
+
+```xml
+<repositories>
+	<repository>
+  	<id>heartpattern</id>
+    <url>https://maven.heartpattern.kr/repository/maven-public/</url>
+  </repository>
+</repositories>
+
+<dependencies>
+	<dependency>
+  	<groupId>kr.heartpattern</groupId>
+    <artifactId>MCVersions</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </dependency>
+</dependencies>
+```
+
+
+
 # Usage
+
 ## Kotlin
 Kotlin methods support coroutine. If you does not prefer coroutine, use java's CompletableFuture methods.
 
@@ -28,19 +75,30 @@ client.close() // Close client
 Java methods support java8's CompletableFuture.
 
 ```java
-MCVersions client = new MCVersions(); // Create new mcversions client
+import kr.heartpattern.mcversions.MCVersions;
+import kr.heartpattern.mcversions.model.Version;
+import kr.heartpattern.mcversions.model.VersionSet;
+import kr.heartpattern.mcversions.model.VersionSummary;
 
-CompletableFuture<VersionSet> versionsFuture = client.requestVersionSetAsync(); // Request version list
-VersionSet versions = versionsFuture.get(); // Get blocking
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-VersionSummary latestVersionSummary = versions.getVersions().get(0); // Get first version
+class Scratch {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        MCVersions client = new MCVersions();
 
-CompletableFuture<Version> latestVersionFuture = client.requestVersionAsync(latestVersionSummary); // Request detail version information
-Version latestVersion = latestVersionFuture.get();
+        CompletableFuture<VersionSet> versionsFuture = client.requestVersionSetAsync();
+        VersionSet versions = versionsFuture.get();
 
-System.out.println(latestVersion.getId());
-System.out.println(latestVersion.getReleaseTime());
+        VersionSummary latestVersionSummary = versions.getVersions().get(0);
 
-client.close(); // Close client
+        CompletableFuture<Version> latestVersionFuture = client.requestVersionAsync(latestVersionSummary);
+        Version latestVersion = latestVersionFuture.get();
+
+        System.out.println(latestVersion.getId());
+        System.out.println(latestVersion.getReleaseTime());
+        client.close();
+    }
+}
 ```
 
