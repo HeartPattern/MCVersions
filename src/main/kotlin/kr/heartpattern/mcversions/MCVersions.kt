@@ -15,7 +15,7 @@ import kr.heartpattern.mcversions.model.VersionSet
 import kr.heartpattern.mcversions.model.VersionSummary
 import java.util.concurrent.CompletableFuture
 
-val jsonFormat = Json(JsonConfiguration.Stable)
+internal val jsonFormat = Json(JsonConfiguration.Stable)
 
 class MCVersions {
     @UseExperimental(KtorExperimentalAPI::class)
