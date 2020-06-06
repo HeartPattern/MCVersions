@@ -4,11 +4,11 @@ plugins {
     id("maven-publish")
 }
 
-group = "kr.heartpattern"
+group = "io.heartpattern"
 version = "1.0.0-SNAPSHOT"
 
 repositories {
-    maven("https://maven.heartpattern.kr/repository/maven-public/")
+    maven("https://maven.heartpattern.io/repository/maven-public/")
 }
 
 val ktor_version = "1.3.0"
@@ -48,9 +48,9 @@ if(project.hasProperty("nexusUser") && project.hasProperty("nexusPassword")){
         repositories {
             maven (
                 if (version.toString().endsWith("SNAPSHOT"))
-                    "https://maven.heartpattern.kr/repository/maven-public-snapshots/"
+                    "https://maven.heartpattern.io/repository/maven-public-snapshots/"
                 else
-                    "https://maven.heartpattern.kr/repository/maven-public-releases/"
+                    "https://maven.heartpattern.io/repository/maven-public-releases/"
             ){
                 credentials {
                     username = properties["nexusUser"] as String

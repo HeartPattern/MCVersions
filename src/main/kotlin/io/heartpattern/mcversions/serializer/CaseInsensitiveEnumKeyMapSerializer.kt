@@ -1,8 +1,8 @@
-package kr.heartpattern.mcversions.serializer
+package io.heartpattern.mcversions.serializer
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.NamedMapClassDescriptor
-import kr.heartpattern.mcversions.model.Os
+import io.heartpattern.mcversions.model.Os
 
 object NativesSerializer: CaseInsensitiveEnumKeyMapSerializer<Os, String>(enumValues(), String.serializer())
 

@@ -5,11 +5,11 @@ Minecraft version information request and parsing library.
 ## Gradle(Kotlin DSL)
 ```kotlin
 repositories {
-    maven("https://maven.heartpattern.kr/repository/maven-public/")
+    maven("https://maven.heartpattern.io/repository/maven-public/")
 }
 
 dependencies {
-    implementation("kr.heartpattern:MCVersions:1.0.0-SNAPSHOT")
+    implementation("io.heartpattern:MCVersions:1.0.0-SNAPSHOT")
 }
 ```
 
@@ -17,12 +17,12 @@ dependencies {
 ```groovy
 repositories {
     maven {
-        url 'https://maven.heartpattern.kr/repository/maven-public/'
+        url 'https://maven.heartpattern.io/repository/maven-public/'
     }
 }
 
 dependencies {
-    implementation 'kr.heartpattern:MCVersions:1.0.0-SNAPSHOT'
+    implementation 'io.heartpattern:MCVersions:1.0.0-SNAPSHOT'
 }
 ```
 
@@ -32,13 +32,13 @@ dependencies {
 <repositories>
 	<repository>
   	<id>heartpattern</id>
-    <url>https://maven.heartpattern.kr/repository/maven-public/</url>
+    <url>https://maven.heartpattern.io/repository/maven-public/</url>
   </repository>
 </repositories>
 
 <dependencies>
 	<dependency>
-  	<groupId>kr.heartpattern</groupId>
+  	<groupId>io.heartpattern</groupId>
     <artifactId>MCVersions</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </dependency>
@@ -54,7 +54,7 @@ Kotlin methods support coroutine. If you does not prefer coroutine, use java's C
 
 ```kotlin
 import kotlinx.coroutines.runBlocking
-import kr.heartpattern.mcversions.MCVersions
+import io.heartpattern.mcversions.MCVersions
 
 val client = MCVersions() // Create new mcversions client
 
@@ -75,10 +75,10 @@ client.close() // Close client
 Java methods support java8's CompletableFuture.
 
 ```java
-import kr.heartpattern.mcversions.MCVersions;
-import kr.heartpattern.mcversions.model.Version;
-import kr.heartpattern.mcversions.model.VersionSet;
-import kr.heartpattern.mcversions.model.VersionSummary;
+import io.heartpattern.mcversions.MCVersions;
+import io.heartpattern.mcversions.model.Version;
+import io.heartpattern.mcversions.model.VersionSet;
+import io.heartpattern.mcversions.model.VersionSummary;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

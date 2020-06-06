@@ -1,4 +1,4 @@
-package kr.heartpattern.mcversions.model
+package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.Serializable
 

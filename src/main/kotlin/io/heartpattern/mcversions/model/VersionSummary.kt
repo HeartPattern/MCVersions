@@ -1,13 +1,13 @@
 @file:UseSerializers(URLSerializer::class, ZonedDateTimeSerializer::class)
 
-package kr.heartpattern.mcversions.model
+package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
 import kotlinx.serialization.UseSerializers
-import kr.heartpattern.mcversions.serializer.CaseInsensitiveEnumSerializer
-import kr.heartpattern.mcversions.serializer.URLSerializer
-import kr.heartpattern.mcversions.serializer.ZonedDateTimeSerializer
+import io.heartpattern.mcversions.serializer.CaseInsensitiveEnumSerializer
+import io.heartpattern.mcversions.serializer.URLSerializer
+import io.heartpattern.mcversions.serializer.ZonedDateTimeSerializer
 import java.net.URL
 import java.time.ZonedDateTime
 

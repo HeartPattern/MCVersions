@@ -1,12 +1,12 @@
 @file:UseSerializers(URLSerializer::class, ZonedDateTimeSerializer::class)
 
-package kr.heartpattern.mcversions.model
+package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
-import kr.heartpattern.mcversions.serializer.NativesSerializer
-import kr.heartpattern.mcversions.serializer.URLSerializer
-import kr.heartpattern.mcversions.serializer.ZonedDateTimeSerializer
+import io.heartpattern.mcversions.serializer.NativesSerializer
+import io.heartpattern.mcversions.serializer.URLSerializer
+import io.heartpattern.mcversions.serializer.ZonedDateTimeSerializer
 import java.net.URL
 import java.time.ZonedDateTime
 
@@ -63,7 +63,9 @@ data class Library(
     val downloads: LibraryDownloads,
     @Serializable(with = NativesSerializer::class) val natives: Map<Os, String> = emptyMap(),
     val rules: List<Rule> = emptyList(),
-    val extract: Extract = Extract(emptyList())
+    val extract: Extract = Extract(
+        emptyList()
+    )
 )
 
 @Serializable

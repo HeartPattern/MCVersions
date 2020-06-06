@@ -1,4 +1,4 @@
-package kr.heartpattern.mcversions
+package io.heartpattern.mcversions
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -10,9 +10,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.future.asCompletableFuture
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kr.heartpattern.mcversions.model.Version
-import kr.heartpattern.mcversions.model.VersionSet
-import kr.heartpattern.mcversions.model.VersionSummary
+import io.heartpattern.mcversions.model.Download
+import io.heartpattern.mcversions.model.Version
+import io.heartpattern.mcversions.model.VersionSet
+import io.heartpattern.mcversions.model.VersionSummary
+import java.io.File
 import java.util.concurrent.CompletableFuture
 
 internal val jsonFormat = Json(JsonConfiguration.Stable)

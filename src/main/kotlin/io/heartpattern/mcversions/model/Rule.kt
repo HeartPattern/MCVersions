@@ -1,8 +1,8 @@
-package kr.heartpattern.mcversions.model
+package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
-import kr.heartpattern.mcversions.serializer.CaseInsensitiveEnumSerializer
+import io.heartpattern.mcversions.serializer.CaseInsensitiveEnumSerializer
 
 @Serializable
 data class Rule(
@@ -26,10 +26,10 @@ data class OsRule(
     val version: String? = null
 )
 
-@Serializable(with=OsSerializer::class)
+@Serializable(with= OsSerializer::class)
 enum class Os{
     OSX, LINUX, WINDOWS
 }
 
-@Serializer(forClass=Os::class)
+@Serializer(forClass= Os::class)
 object OsSerializer: CaseInsensitiveEnumSerializer<Os>(enumValues())

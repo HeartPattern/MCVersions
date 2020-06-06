@@ -1,4 +1,4 @@
-package kr.heartpattern.mcversions.model
+package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
@@ -6,7 +6,7 @@ import kotlinx.serialization.internal.StringDescriptor
 import kotlinx.serialization.json.JsonElementSerializer
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kr.heartpattern.mcversions.jsonFormat
+import io.heartpattern.mcversions.jsonFormat
 
 @Serializable
 data class ArgumentSet(
@@ -24,8 +24,10 @@ sealed class Argument {
 
         override fun serialize(encoder: Encoder, obj: Argument) {
             when (obj) {
-                is StaticArgument -> encoder.encode(StaticArgument.serializer(), obj)
-                is RuledArgument -> encoder.encode(RuledArgument.serializer(), obj)
+                is StaticArgument -> encoder.encode(
+                    StaticArgument.serializer(), obj)
+                is RuledArgument -> encoder.encode(
+                    RuledArgument.serializer(), obj)
             }
         }
 

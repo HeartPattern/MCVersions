@@ -1,4 +1,4 @@
-package kr.heartpattern.mcversions.serializer
+package io.heartpattern.mcversions.serializer
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.StringDescriptor
