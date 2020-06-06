@@ -1,3 +1,4 @@
+![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fmaven.heartpattern.io%2Frepository%2Fmaven-public%2Fio%2Fheartpattern%2FMCVersions%2Fmaven-metadata.xml) ![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fjenkins.heartpattern.io%2Fjob%2FHeartPattern%2Fjob%2FMCVersions%2Fjob%2Fmaster%2F) ![GitHub top language](https://img.shields.io/github/languages/top/HeartPattern/MCVersions) ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/HeartPattern/MCVersions) ![GitHub repo size](https://img.shields.io/github/repo-size/HeartPattern/MCVersions) ![GitHub](https://img.shields.io/github/license/HeartPattern/MCVersions) ![GitHub last commit](https://img.shields.io/github/last-commit/HeartPattern/MCVersions)
 # MCVersions
 Minecraft version information request and parsing library.
 
