@@ -24,7 +24,8 @@ data class Version(
     val minimumLauncherVersion: Int,
     val releaseTime: ZonedDateTime,
     val time: ZonedDateTime,
-    val type: VersionType
+    val type: VersionType,
+    val complianceLevel: Int = 0
 )
 
 @Serializable
