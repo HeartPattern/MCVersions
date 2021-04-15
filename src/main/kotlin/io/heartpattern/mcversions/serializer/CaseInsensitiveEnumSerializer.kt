@@ -1,14 +1,17 @@
 package io.heartpattern.mcversions.serializer
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.StringDescriptor
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 open class CaseInsensitiveEnumSerializer<E : Enum<E>>(val enums: Array<E>) : KSerializer<E> {
-    override val descriptor: SerialDescriptor =
-        StringDescriptor.withName(enums.first().declaringClass.simpleName)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(enums.first().declaringClass.name, PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, obj: E) {
-        encoder.encodeString(obj.name)
+    override fun serialize(encoder: Encoder, value: E) {
+        encoder.encodeString(value.name)
     }
 
     override fun deserialize(decoder: Decoder): E {

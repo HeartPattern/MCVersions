@@ -1,26 +1,21 @@
 package io.heartpattern.mcversions
 
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.request.get
-import io.ktor.util.KtorExperimentalAPI
-import kotlinx.coroutines.async
-import kotlinx.coroutines.future.asCompletableFuture
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import io.heartpattern.mcversions.model.Download
 import io.heartpattern.mcversions.model.Version
 import io.heartpattern.mcversions.model.VersionSet
 import io.heartpattern.mcversions.model.VersionSummary
-import java.io.File
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.future.asCompletableFuture
+import kotlinx.serialization.json.Json
 import java.util.concurrent.CompletableFuture
 
-internal val jsonFormat = Json(JsonConfiguration.Stable)
+internal val jsonFormat = Json {}
 
 class MCVersions {
-    @UseExperimental(KtorExperimentalAPI::class)
     private val client = HttpClient(CIO) {
         install(JsonFeature) {
             serializer = KotlinxSerializer()

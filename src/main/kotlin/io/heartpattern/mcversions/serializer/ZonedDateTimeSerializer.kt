@@ -1,15 +1,18 @@
 package io.heartpattern.mcversions.serializer
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.StringDescriptor
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.time.ZonedDateTime
 
-@Serializer(forClass = ZonedDateTime::class)
 object ZonedDateTimeSerializer : KSerializer<ZonedDateTime> {
-    override val descriptor: SerialDescriptor = StringDescriptor.withName("ZonedDateTime")
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("java.time.ZonedDateTime", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, obj: ZonedDateTime) {
-        encoder.encodeString(obj.toString())
+    override fun serialize(encoder: Encoder, value: ZonedDateTime) {
+        encoder.encodeString(value.toString())
     }
 
     override fun deserialize(decoder: Decoder): ZonedDateTime {

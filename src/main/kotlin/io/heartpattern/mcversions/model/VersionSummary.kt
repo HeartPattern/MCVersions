@@ -28,5 +28,4 @@ enum class VersionType {
     OLD_ALPHA
 }
 
-@Serializer(forClass = VersionType::class)
 object VersionTypeSerializer : CaseInsensitiveEnumSerializer<VersionType>(enumValues())

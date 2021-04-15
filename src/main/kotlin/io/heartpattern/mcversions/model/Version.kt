@@ -4,7 +4,6 @@ package io.heartpattern.mcversions.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
-import io.heartpattern.mcversions.serializer.NativesSerializer
 import io.heartpattern.mcversions.serializer.URLSerializer
 import io.heartpattern.mcversions.serializer.ZonedDateTimeSerializer
 import java.net.URL
@@ -25,7 +24,8 @@ data class Version(
     val releaseTime: ZonedDateTime,
     val time: ZonedDateTime,
     val type: VersionType,
-    val complianceLevel: Int = 0
+    val complianceLevel: Int = 0,
+    val javaVersion: JavaVersion? = null
 )
 
 @Serializable
@@ -62,7 +62,7 @@ data class SimpleDownload(
 data class Library(
     val name: String,
     val downloads: LibraryDownloads,
-    @Serializable(with = NativesSerializer::class) val natives: Map<Os, String> = emptyMap(),
+    val natives: Map<Os, String> = emptyMap(),
     val rules: List<Rule> = emptyList(),
     val extract: Extract = Extract(
         emptyList()
@@ -107,3 +107,9 @@ data class LoggingClientDownload(
     override val size: Long,
     override val url: URL
 ) : Download
+
+@Serializable
+data class JavaVersion(
+    val component: String,
+    val majorVersion: Int
+)

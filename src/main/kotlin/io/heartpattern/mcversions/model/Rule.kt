@@ -16,7 +16,6 @@ enum class RuleAction {
     ALLOW, DISALLOW
 }
 
-@Serializer(forClass = RuleAction::class)
 object RuleActionSerializer : CaseInsensitiveEnumSerializer<RuleAction>(enumValues())
 
 @Serializable
@@ -31,5 +30,4 @@ enum class Os{
     OSX, LINUX, WINDOWS
 }
 
-@Serializer(forClass= Os::class)
 object OsSerializer: CaseInsensitiveEnumSerializer<Os>(enumValues())

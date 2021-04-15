@@ -6,11 +6,11 @@ Minecraft version information request and parsing library.
 ## Gradle(Kotlin DSL)
 ```kotlin
 repositories {
-    maven("https://maven.heartpattern.io/repository/maven-public/")
+    maven("https://repo.heartpattern.io/repository/maven-public/")
 }
 
 dependencies {
-    implementation("io.heartpattern:MCVersions:1.0.0-SNAPSHOT")
+    implementation("io.heartpattern:mcversions:1.0.3-SNAPSHOT")
 }
 ```
 
@@ -18,12 +18,12 @@ dependencies {
 ```groovy
 repositories {
     maven {
-        url 'https://maven.heartpattern.io/repository/maven-public/'
+        url 'https://repo.heartpattern.io/repository/maven-public/'
     }
 }
 
 dependencies {
-    implementation 'io.heartpattern:MCVersions:1.0.0-SNAPSHOT'
+    implementation 'io.heartpattern:MCVersions:1.0.3-SNAPSHOT'
 }
 ```
 
@@ -33,15 +33,15 @@ dependencies {
 <repositories>
 	<repository>
   	<id>heartpattern</id>
-    <url>https://maven.heartpattern.io/repository/maven-public/</url>
+    <url>https://repo.heartpattern.io/repository/maven-public/</url>
   </repository>
 </repositories>
 
 <dependencies>
 	<dependency>
   	<groupId>io.heartpattern</groupId>
-    <artifactId>MCVersions</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>mcversions</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
   </dependency>
 </dependencies>
 ```

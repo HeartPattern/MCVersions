@@ -1,12 +1,16 @@
 package io.heartpattern.mcversions.model
 
-import kotlinx.serialization.*
-import kotlinx.serialization.internal.SerialClassDescImpl
-import kotlinx.serialization.internal.StringDescriptor
-import kotlinx.serialization.json.JsonElementSerializer
+import io.heartpattern.mcversions.jsonFormat
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import io.heartpattern.mcversions.jsonFormat
 
 @Serializable
 data class ArgumentSet(
@@ -14,44 +18,46 @@ data class ArgumentSet(
     val jvm: List<Argument>
 )
 
-@Serializable
-sealed class Argument {
-    abstract val value: List<String>
+@Serializable(Argument.Serializer::class)
+interface Argument {
+    val value: List<String>
 
-    @Serializer(forClass = Argument::class)
-    companion object : KSerializer<Argument> {
-        override val descriptor: SerialDescriptor = StringDescriptor.withName("Argument")
+    companion object Serializer : KSerializer<Argument> {
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("io.heartpattern.mcversions.model.Argument", PrimitiveKind.STRING)
 
-        override fun serialize(encoder: Encoder, obj: Argument) {
-            when (obj) {
-                is StaticArgument -> encoder.encode(
-                    StaticArgument.serializer(), obj)
-                is RuledArgument -> encoder.encode(
-                    RuledArgument.serializer(), obj)
+        override fun serialize(encoder: Encoder, value: Argument) {
+            when (value) {
+                is StaticArgument -> encoder.encodeSerializableValue(
+                    StaticArgument.serializer(), value
+                )
+                is RuledArgument -> encoder.encodeSerializableValue(
+                    RuledArgument.serializer(), value
+                )
             }
         }
 
         override fun deserialize(decoder: Decoder): Argument {
-            val json = decoder.decode(JsonElementSerializer)
+            val json = decoder.decodeSerializableValue(JsonElement.serializer())
             return if (json is JsonPrimitive) {
-                jsonFormat.fromJson(StaticArgument.serializer(), json)
+                jsonFormat.decodeFromJsonElement(StaticArgument.serializer(), json)
             } else {
-                jsonFormat.fromJson(RuledArgument.serializer(), json)
+                jsonFormat.decodeFromJsonElement(RuledArgument.serializer(), json)
             }
         }
     }
 }
 
-@Serializable
+@Serializable(StaticArgument.Serializer::class)
 data class StaticArgument(
     override val value: List<String>
-) : Argument() {
-    @Serializer(forClass = StaticArgument::class)
-    companion object : KSerializer<StaticArgument> {
-        override val descriptor: SerialDescriptor = StringDescriptor.withName("StaticArgument")
+) : Argument {
+    companion object Serializer : KSerializer<StaticArgument> {
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("io.heartpattern.mcversions.model.StaticArgument", PrimitiveKind.STRING)
 
-        override fun serialize(encoder: Encoder, obj: StaticArgument) {
-            encoder.encodeString(obj.value.first())
+        override fun serialize(encoder: Encoder, value: StaticArgument) {
+            encoder.encodeString(value.value.first())
         }
 
         override fun deserialize(decoder: Decoder): StaticArgument {
@@ -60,39 +66,37 @@ data class StaticArgument(
     }
 }
 
-@Serializable
+@Serializable(RuledArgument.Serializer::class)
 data class RuledArgument(
     override val value: List<String>,
     val rules: List<Rule>
-) : Argument() {
-    @Serializer(forClass = RuledArgument::class)
-    companion object : KSerializer<RuledArgument> {
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("RuledArgument") {
-            init {
-                addElement("value")
-                addElement("rules")
+) : Argument {
+    companion object Serializer : KSerializer<RuledArgument> {
+        override val descriptor: SerialDescriptor =
+            buildClassSerialDescriptor("io.heartpattern.mversions.model.RuledArgument") {
+                element<String>("value")
+                element<List<String>>("rules")
             }
-        }
 
-        override fun serialize(encoder: Encoder, obj: RuledArgument) {
-            if (obj.value.size == 1) {
-                val composit = encoder.beginStructure(descriptor)
-                composit.encodeSerializableElement(descriptor, 0, Rule.serializer().list, obj.rules)
-                if (obj.value.size == 1)
-                    composit.encodeStringElement(descriptor, 1, obj.value[0])
+        override fun serialize(encoder: Encoder, value: RuledArgument) {
+            if (value.value.size == 1) {
+                val composite = encoder.beginStructure(descriptor)
+                composite.encodeSerializableElement(descriptor, 0, ListSerializer(Rule.serializer()), value.rules)
+                if (value.value.size == 1)
+                    composite.encodeStringElement(descriptor, 1, value.value[0])
                 else
-                    composit.encodeSerializableElement(descriptor, 1, String.serializer().list, obj.value)
+                    composite.encodeSerializableElement(descriptor, 1, ListSerializer(String.serializer()), value.value)
             }
         }
 
         override fun deserialize(decoder: Decoder): RuledArgument {
-            val json = decoder.decode(JsonElementSerializer) as JsonObject
-            val rules = jsonFormat.fromJson(Rule.serializer().list, json["rules"]!!)
+            val json = decoder.decodeSerializableValue(JsonElement.serializer()) as JsonObject
+            val rules = jsonFormat.decodeFromJsonElement(ListSerializer(Rule.serializer()), json["rules"]!!)
             val jsonValue = json["value"]!!
             val value = if (jsonValue is JsonPrimitive) {
                 listOf(jsonValue.content)
             } else {
-                jsonFormat.fromJson(String.serializer().list, jsonValue)
+                jsonFormat.decodeFromJsonElement(ListSerializer(String.serializer()), jsonValue)
             }
             return RuledArgument(
                 value,

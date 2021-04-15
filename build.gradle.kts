@@ -1,57 +1,58 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.3.61"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.3.61"
+    kotlin("jvm") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.30"
     id("maven-publish")
 }
 
 group = "io.heartpattern"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.3-SNAPSHOT"
 
 repositories {
-    maven("https://maven.heartpattern.io/repository/maven-public/")
+    maven("https://repo.heartpattern.io/repository/maven-public/")
 }
 
-val ktor_version = "1.3.0"
-val kotlin_version = "1.3.60"
-val coroutine_version = "1.3.0-M2"
+object Version {
+    val ktor = "1.5.1"
+    val kotlin = "1.4.30"
+    val coroutine = "1.4.2"
+}
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutine_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
-    implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${Version.coroutine}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("io.ktor:ktor-client-cio:${Version.ktor}")
+    implementation("io.ktor:ktor-client-serialization-jvm:${Version.ktor}")
     implementation("org.slf4j:slf4j-api:1.7.30")
 
     testImplementation("junit:junit:4.12")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3")
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
     testImplementation("org.slf4j:slf4j-simple:1.7.30")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>{
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
 
 }
 
-if(project.hasProperty("nexusUser") && project.hasProperty("nexusPassword")){
+if (project.hasProperty("nexusUser") && project.hasProperty("nexusPassword")) {
     publishing {
         publications {
-            create<MavenPublication>("class"){
-                artifactId = "MCVersions"
+            create<MavenPublication>("class") {
+                artifactId = "mcversions"
                 from(components.getByName("java"))
             }
         }
         repositories {
-            maven (
+            maven(
                 if (version.toString().endsWith("SNAPSHOT"))
-                    "https://maven.heartpattern.io/repository/maven-public-snapshots/"
+                    "https://repo.heartpattern.io/repository/maven-public-snapshots/"
                 else
-                    "https://maven.heartpattern.io/repository/maven-public-releases/"
-            ){
+                    "https://repo.heartpattern.io/repository/maven-public-releases/"
+            ) {
                 credentials {
                     username = properties["nexusUser"] as String
                     password = properties["nexusPassword"] as String
